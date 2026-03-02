@@ -56,7 +56,7 @@ class GretingPage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: Text(
-                "Ini adalah aplikasi Flutter sederhana yang menampilkan halaman sapaan dengan latar belakang gradien ungu. Semoga Anda menikmati belajar Flutter!",
+                "Ini adalah aplikasi Flutter sederhana. Semoga Anda menikmati belajar Flutter!",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.black87),
               ),
@@ -90,49 +90,129 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Profil Saya'),
-        centerTitle: true,
+        title: const Text("My Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const CircleAvatar(
-              radius: 65,
-              backgroundColor: Colors.deepPurple,
-              child: CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage('assets/images/1.png'),
+            Stack(
+              alignment: Alignment.center,
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  height: 250,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.deepPurple, Colors.indigo],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 150,
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 15,
+                          spreadRadius: 5,
+                        )
+                      ],
+                    ),
+                    child: const CircleAvatar(
+                      radius: 70,
+                      backgroundImage: AssetImage('assets/images/me.jpeg'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 80), // Jarak untuk foto yang melayang
+
+            const Text(
+              "Firda Rahayu",
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              "Mahasiswa",
+              style: TextStyle(fontSize: 16, color: Colors.grey, letterSpacing: 1.2),
+            ),
+            
+            const Padding(
+              padding: EdgeInsets.all(25.0),
+              child: Text(
+                "Saya adalah mahasiswa yang suka mengeksplorasi teknologi baru dan akhir akhir ini sedang tertarik dengan kecerdasan buatan.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
               ),
             ),
-            const SizedBox(height: 20),
-            const Text(
-              'Firda Rahayu',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const Divider(height: 40),
 
-            _buildInfoCard(Icons.badge, "NRP", "3124521002"),
-            _buildInfoCard(Icons.school, "Program Studi", "D3 Teknik Informatika"),
-            _buildInfoCard(
-              Icons.description,
-              "Deskripsi",
-              "Saya adalah mahasiswa D3 Teknik Informatika yang memiliki minat besar dalam pengembangan aplikasi mobile menggunakan Flutter. Saya senang belajar teknologi baru dan selalu bersemangat untuk mengembangkan keterampilan saya di bidang pemrograman.",
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  _buildDetailItem(Icons.perm_identity, "NRP", "3124521002"),
+                  _buildDetailItem(Icons.book_outlined, "Program Studi", "D3 Teknik Informatika"),
+                  _buildDetailItem(Icons.location_on_outlined, "Alamat", "Sidoarjo, Indonesia"),
+                ],
+              ),
             ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoCard(IconData icon, String title, String subtitle) {
-    return Card(
+  Widget _buildDetailItem(IconData icon, String label, String value) {
+    return Container(
       margin: const EdgeInsets.only(bottom: 15),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.deepPurple),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          )
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.deepPurple.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: Colors.deepPurple),
+          ),
+          const SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ],
       ),
     );
   }
